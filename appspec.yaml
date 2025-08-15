@@ -1,0 +1,7 @@
+version: 0.0
+Resources:
+  - codeDeployDemo:
+      Type: AWS::Lambda::Function
+      Properties:
+        Name: "codeDeployDemo"
+        Alias: "prod"
