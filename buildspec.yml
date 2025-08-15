@@ -1,5 +1,4 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
@@ -18,10 +17,6 @@ phases:
       - echo Running tests...
       # For Python
       - python -m pytest tests/ || echo "No tests found"
-      - VERSION=$(aws lambda publish-version --function-name codeDeployDemo --query 'Version' --output text)
-      - sed -i "s/CURRENT_VERSION/$VERSION/" appspec.yml
-      # For Node.js, uncomment the following:
-      # - npm test
       
   build:
     commands:
@@ -49,13 +44,32 @@ phases:
       - echo Entered the post_build phase...
       - echo Build completed on `date`
       - ls -la lambda-function.zip
+      
+      # Update the Lambda function first to get the new version
+      - echo Updating Lambda function...
+      - aws lambda update-function-code --function-name codeDeployDemo --zip-file fileb://lambda-function.zip
+      
+      # Wait for the update to complete
+      - echo Waiting for function update to complete...
+      - aws lambda wait function-updated --function-name codeDeployDemo
+      
+      # Get the latest version number
+      - echo Getting latest version...
+      - VERSION=$(aws lambda publish-version --function-name codeDeployDemo --query 'Version' --output text)
+      - echo "New version: $VERSION"
+      
+      # Replace the placeholder in appspec.yml
+      - sed -i "s/CURRENT_VERSION/$VERSION/" appspec.yml
+      
+      # Verify the replacement worked
+      - echo "Updated appspec.yml content:"
+      - cat appspec.yml
 
 artifacts:
   files:
     - lambda-function.zip
     - appspec.yml
   name: lambda-deployment-package
-
 cache:
   paths:
     # For Python
