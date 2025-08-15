@@ -51,6 +51,7 @@ phases:
 artifacts:
   files:
     - lambda-function.zip
+    - appspec.yml
   name: lambda-deployment-package
 
 cache:
