@@ -5,3 +5,4 @@ Resources:
       Properties:
         Name: "codeDeployDemo"
         Alias: "prod"
+        CurrentVersion: CURRENT_VERSION

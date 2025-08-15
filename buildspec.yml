@@ -18,6 +18,8 @@ phases:
       - echo Running tests...
       # For Python
       - python -m pytest tests/ || echo "No tests found"
+      - VERSION=$(aws lambda publish-version --function-name codeDeployDemo --query 'Version' --output text)
+      - sed -i "s/CURRENT_VERSION/$VERSION/" appspec.yml
       # For Node.js, uncomment the following:
       # - npm test
       
