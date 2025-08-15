@@ -1,3 +1,4 @@
+
 version: 0.0
 Resources:
   - codeDeployDemo:
@@ -5,3 +6,4 @@ Resources:
       Properties:
         Name: "codeDeployDemo"
         Alias: "prod"
+        CurrentVersion: "CURRENT_VERSION"
