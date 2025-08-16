@@ -56,7 +56,6 @@ phases:
       # Get the latest version number
       - echo Getting latest version...
       - VERSION=$(aws lambda publish-version --function-name codeDeployDemo --query 'Version' --output text)
-      - echo "New version: $VERSION"
       
       # Replace the placeholder in appspec.yml
       - sed -i "s/CURRENT_VERSION/$VERSION/" appspec.yml
