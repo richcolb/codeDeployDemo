@@ -6,4 +6,6 @@ def lambda_handler(event, context):
         'headers': {"Content-Type": "application/json"},
         'body': "Hello from Lambda - via codebuild!!"
     }
-    return(json.dumps(response))
+    return(response)
+
+    
