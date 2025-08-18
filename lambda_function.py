@@ -1,8 +1,8 @@
 import json
 
 def lambda_handler(event, context):
-    # TODO
     return {
         'statusCode': 200,
-        'body': 'Hello from Lambda - via codebuild'
+        'headers': {"Content-Type": "application/json"},
+        'body': json.dumps({"message": "Hello from Lambda - via codebuild"})
     }
